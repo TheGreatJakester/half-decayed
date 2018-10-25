@@ -1,20 +1,29 @@
 LENGTH = 100;
-currentTime = 0;
 
 simulation = {
+    current : 0,
+    paused: false,
+    set currentTime(x){
+        if(!this.paused){
+            this.current = x;
+        }
+    },
+    get currentTime(){
+        return this.current;
+    },
     numberOfSamples : LENGTH*LENGTH,
     order: new Array(this.numberOfSamples),
     units: 'years',
     halfLife : 100,
     unitsPerSecond: 1,
-    getSamplesAt : function(seconds){
+    getSamples : function(){
         samples = new Array(this.numberOfSamples).fill(0)
         numberOfDecayedSamples = 
         Math.floor(
             this.numberOfSamples*
             Math.pow(
                 .5,
-                (seconds*this.unitsPerSecond)/this.halfLife
+                (this.currentTime*this.unitsPerSecond)/this.halfLife
             )
         )
         for(i=0;i<numberOfDecayedSamples;i++){
@@ -45,7 +54,7 @@ function initMaterialWindow(){
 function drawFrame(context){
     var start = (new Date()).getTime();
     //drawing code
-        samples = simulation.getSamplesAt(currentTime)
+        samples = simulation.getSamples();
         for(i=0;i<LENGTH;i++){
             for(j=0;j<LENGTH;j++){
                 if(samples[i*LENGTH+j] == 1){
@@ -62,7 +71,7 @@ function drawFrame(context){
     var finish = (new Date()).getTime();
     var delta = finish - start;
     var framesPerSecond = 30;
-    currentTime += 1/framesPerSecond;
+    simulation.currentTime += 1/framesPerSecond;
     var waitTime = 1000/framesPerSecond - delta;
     if(waitTime < 0){
         waitTime = 0;
