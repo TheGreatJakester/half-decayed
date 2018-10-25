@@ -10,24 +10,24 @@ function initMaterialWindow(){
 
 
 
-length=50;
+LENGTH=150;
 samples = [];
-samples.lenght = lenght*length;
+samples.length = LENGTH*LENGTH;
 
 
 function drawFrame(context){
     var start = (new Date()).getTime();
     //drawing code
-        for(i=0;i<length;i++){
-            for(j=0;j<length;i++){
-                if(samples[i*length+j] == 1){
+        samples[Math.floor(Math.random()*samples.length)] = 1;
+        for(i=0;i<LENGTH;i++){
+            for(j=0;j<LENGTH;j++){
+                if(samples[i*LENGTH+j] == 1){
                     context.fillStyle = "#FF0000" //red
                 }
                 else{
-                    context.fillStyle = "#0000FF" //Green
+                    context.fillStyle = "#00F00F" //Green
                 }
-                console.log('trying to draw a rect')
-                context.fillRect(i*(width/length),j*(height/length),(width/length),(height/length))
+                context.fillRect(i*(width/LENGTH),j*(height/LENGTH),(width/LENGTH),(height/LENGTH))
             }
         }
 
@@ -35,7 +35,7 @@ function drawFrame(context){
     var finish = (new Date()).getTime();
     var delta = finish - start;
     var framesPerSecond = 30;
-    var waitTime = delta - 1000/framesPerSecond;
+    var waitTime = 1000/framesPerSecond - delta;
     if(waitTime < 0){
         waitTime = 0;
     }
