@@ -1,6 +1,11 @@
 <!DOCTYPE html>
     <head>
         <title>half-decayed</title>
+        <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous">
+        </script>
         <script src="material.js"></script>
         <meta charset="UTF-8">
     </head>
@@ -16,7 +21,7 @@
             <p id="time">
                 0
             </p>
-            <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" onmouseup="simulation.current = this.value/simulation.unitsPerSecond">
+            <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" onchange="simulation.current = this.value/simulation.unitsPerSecond">
         </div>
     </body>
 </html>

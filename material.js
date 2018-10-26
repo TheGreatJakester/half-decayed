@@ -1,4 +1,4 @@
-LENGTH = 100;
+LENGTH = 50;
 
 simulation = {
     current : 0,
@@ -37,7 +37,7 @@ simulation = {
         for(i=0;i<this.numberOfSamples;i++){
             this.order[i] = i;
         }
-        this.order.sort(Math.random)
+        this.order.sort(function(){return Math.random()-.5;})
     }
 }
 
@@ -68,7 +68,7 @@ function drawFrame(){
 }
 
 function updateElements(){
-    document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerSecond;
+    //document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerSecond;
 }
 
 function startSimulation(){
