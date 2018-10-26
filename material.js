@@ -1,4 +1,4 @@
-LENGTH = 50;
+let LENGTH = 25;
 
 simulation = {
     current : 0,
@@ -16,27 +16,35 @@ simulation = {
     units: 'years',
     halfLife : 100,
     unitsPerSecond: 1,
-    getSamples : function(){
-        samples = new Array(this.numberOfSamples).fill(0)
-        numberOfDecayedSamples = 
-        Math.floor(
+    get numberOfDecayedSamples(){
+        return this.numberOfSamples - Math.floor(
             this.numberOfSamples*
             Math.pow(
                 .5,
                 (this.currentTime*this.unitsPerSecond)/this.halfLife
             )
-        )
-        for(i=0;i<numberOfDecayedSamples;i++){
+        );
+    },
+    getSamples : function(){
+        samples = new Array(this.numberOfSamples).fill(0)
+        for(i=0;i<this.numberOfDecayedSamples;i++){
             samples[this.order[i]] = 1;
         }
         return samples;
     },
+    changeSpeed : function(unitsPerSecond){
+        this.current = this.current*this.unitsPerSecond/unitsPerSecond;
+        this.unitsPerSecond = unitsPerSecond;
+    },
     reset : function(){
         this.currentTime = 0;
+        this.halfLife = document.getElementById("halfLife").value;
+        this.units = document.getElementById("units").value;
         //Make sure to run this atleast once before the first simulation goes
         for(i=0;i<this.numberOfSamples;i++){
             this.order[i] = i;
         }
+        document.getElementById("decayProgress").max = 10*simulation.halfLife;
         this.order.sort(function(){return Math.random()-.5;})
     }
 }
@@ -57,10 +65,10 @@ function drawFrame(){
     for(i=0;i<LENGTH;i++){
         for(j=0;j<LENGTH;j++){
             if(samples[i*LENGTH+j] == 1){
-                context.fillStyle = "#FF0000" //red
+                context.fillStyle = "#111111" //red
             }
             else{
-                context.fillStyle = "#00F00F" //Green
+                context.fillStyle = "#0ea1b5" //Green
             }
             context.fillRect(i*(width/LENGTH),j*(height/LENGTH),(width/LENGTH),(height/LENGTH))
         }
@@ -68,20 +76,15 @@ function drawFrame(){
 }
 
 function updateElements(){
-    //document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerSecond;
+    document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerSecond;
+    document.getElementById("time").innerHTML = Math.floor(simulation.currentTime*simulation.unitsPerSecond) + " " + simulation.units;
+    document.getElementById("progress").innerHTML = simulation.numberOfDecayedSamples + "/" + simulation.numberOfSamples;
 }
 
 function startSimulation(){
-    var start = (new Date()).getTime();
+    setInterval(function(){
+        simulation.currentTime += 1/30;
         drawFrame()
         updateElements()
-    var finish = (new Date()).getTime();
-    var delta = finish - start;
-    var framesPerSecond = 30;
-    simulation.currentTime += 1/framesPerSecond;
-    var waitTime = 1000/framesPerSecond - delta;
-    if(waitTime < 0){
-        waitTime = 0;
-    }
-    setTimeout(function(){startSimulation()},waitTime)
+    },1000/30)
 }
