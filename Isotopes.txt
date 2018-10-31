@@ -1,55 +1,49 @@
-myIsotope = {
-
-	"Isotope": [
+[
+	{
+		"name":"Lutetium-176", 
+		"product":"Hafnium-176", 
+		"half-life":37.8, 
+		"half-life units": "billion years",
+		"dating range": "early Earth"
+	},
 	
-			{
-				"name":"Lutetium-176", 
-				"product":"Hafnium-176", 
-				"half-life":37.8, 
-				"half-life units": "billion years",
-				"dating range": "early Earth"
-		}
-		
-			{
-				"name":"Uranium-238", 
-				"product":"Lead-206", 
-				"half-life":4.468, 
-				"half-life units": "billion years",
-				"dating range": "10 million to origin of Earth"
-		}
-		
-			{
-				"name":"Uranium-235", 
-				"product":"Lead-207", 
-				"half-life":704, 
-				"half-life units": "million years",
-				"dating range": "10 million to origin of Earth"
-		}
-		
-			{
-				"name":"Rubidiom-87", 
-				"product":"Strontiu,-87", 
-				"half-life":48.8, 
-				"half-life units": "billion years",
-				"dating range": "10 million to origin of Earth"
-		}
-		
-			{
-				"name":"Potassium-40", 
-				"product":"Argon-40", 
-				"half-life":1.277, 
-				"half-life units": "billion years",
-				"dating range": "100,000 to origin of Earth"
-		}
-		
-			{
-				"name":"Carbon-14", 
-				"product":"Nitrogen-14", 
-				"half-life":5730, 
-				"half-life units": "years",
-				"dating range": "0-100,000"
-		}
-		
-	]
+	{
+		"name":"Uranium-238", 
+		"product":"Lead-206", 
+		"half-life":4.468, 
+		"half-life units": "billion years",
+		"dating range": "10 million to origin of Earth"
+	},
 	
- }
+	{
+		"name":"Uranium-235", 
+		"product":"Lead-207", 
+		"half-life":704, 
+		"half-life units": "million years",
+		"dating range": "10 million to origin of Earth"
+	},
+	
+	{
+		"name":"Rubidiom-87", 
+		"product":"Strontiu,-87", 
+		"half-life":48.8, 
+		"half-life units": "billion years",
+		"dating range": "10 million to origin of Earth"
+	},
+	
+	{
+		"name":"Potassium-40", 
+		"product":"Argon-40", 
+		"half-life":1.277, 
+		"half-life units": "billion years",
+		"dating range": "100,000 to origin of Earth"
+	},
+	
+	{
+		"name":"Carbon-14", 
+		"product":"Nitrogen-14", 
+		"half-life":5730, 
+		"half-life units": "years",
+		"dating range": "0-100,000"
+	}
+]

@@ -1,27 +1,44 @@
 let LENGTH = 25;
 
 simulation = {
-    current : 0,
-    paused: false,
-    set currentTime(x){
-        if(!this.paused || x == 0){
-            this.current = x;
+    startTime : (new Date()).getTime(),
+    get currentTime(){
+        if(!this.paused){
+            return ((new Date()).getTime() - this.startTime);
+        }
+        else{
+            return this.pausedTime;
         }
     },
-    get currentTime(){
-        return this.current;
+    paused: true,
+    pausedTime: 0,
+    pause : function(toggle){
+        if(toggle != undefined){
+            if(toggle && !this.paused){
+                this.pausedTime = this.currentTime;
+                this.paused = true;
+            }
+            else if(this.paused){
+                this.startTime = (new Date()).getTime() - this.pausedTime;
+                this.pausedTime = 0;
+                this.paused = false;
+            }
+        }
+        else{
+            this.pause(!this.paused)
+        }
     },
     numberOfSamples : LENGTH*LENGTH,
     order: new Array(this.numberOfSamples),
     units: 'years',
     halfLife : 100,
-    unitsPerSecond: 1,
+    unitsPerSecond: .001,
     get numberOfDecayedSamples(){
         return this.numberOfSamples - Math.floor(
             this.numberOfSamples*
             Math.pow(
                 .5,
-                (this.currentTime*this.unitsPerSecond)/this.halfLife
+                ((this.currentTime)*this.unitsPerSecond)/this.halfLife
             )
         );
     },
@@ -33,7 +50,7 @@ simulation = {
         return samples;
     },
     changeSpeed : function(unitsPerSecond){
-        this.current = this.current*this.unitsPerSecond/unitsPerSecond;
+        this.currentTime = this.currentTime*this.unitsPerSecond/unitsPerSecond;
         this.unitsPerSecond = unitsPerSecond;
     },
     reset : function(){
@@ -49,7 +66,27 @@ simulation = {
     }
 }
 
+function loadJSON(fileName,callback) {   
+
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', fileName , true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            callback(JSON.parse(xobj.responseText));
+          }
+    };
+    xobj.send(null);
+ }
+
 function initMaterialWindow(){
+    loadJSON("./Isotopes.txt",function(isotopes){
+        isotopeDropDown = document.getElementById("isotopes");
+        isotopes.forEach(isotope => {
+            isotopeDropDown.innerHTML = isotopeDropDown.innerHTML + 
+            "\n <option value=\""+isotope.name + "\">"+isotope.name+"</option>"
+        })
+    })
     materialWindow = document.getElementById("materialWindow");
     width = materialWindow.width;
     height = materialWindow.height;
