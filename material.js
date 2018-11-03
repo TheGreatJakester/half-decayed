@@ -3,6 +3,13 @@ let LENGTH = 25;
 simulation = {
     isotopes : [],
     startTime : (new Date()).getTime(),
+    paused: true,
+    pausedTime: 0,
+    numberOfSamples : LENGTH*LENGTH,
+    order: new Array(this.numberOfSamples),
+    units: 'years',
+    halfLife : 100,
+    unitsPerTick: .001,
     get currentTime(){
         if(!this.paused){
             return ((new Date()).getTime() - this.startTime);
@@ -11,37 +18,39 @@ simulation = {
             return this.pausedTime;
         }
     },
-    paused: true,
-    pausedTime: 0,
-    pause : function(toggle){
-        if(toggle != undefined){
-            if(toggle && !this.paused){
+    set currentTime(time){
+        if(this.paused){
+            this.pausedTime = time;
+        }
+        else if(!this.paused){
+            this.startTime = (new Date()).getTime() - time;
+        }
+    },
+    get numberOfDecayedSamples(){
+        ans =  this.numberOfSamples - Math.floor(
+            this.numberOfSamples*
+            Math.pow(.5,(this.currentTime*this.unitsPerTick)/this.halfLife)
+        );
+        if(isNaN(ans)){
+            console.log(ans)
+        }
+        return ans;
+    },
+    pause : function(state){
+        if(state != undefined){
+            console.log(state)
+            if(state && !this.paused){
                 this.pausedTime = this.currentTime;
                 this.paused = true;
             }
-            else if(this.paused){
+            else if(!state && this.paused){
                 this.startTime = (new Date()).getTime() - this.pausedTime;
-                this.pausedTime = 0;
                 this.paused = false;
             }
         }
         else{
             this.pause(!this.paused)
         }
-    },
-    numberOfSamples : LENGTH*LENGTH,
-    order: new Array(this.numberOfSamples),
-    units: 'years',
-    halfLife : 100,
-    unitsPerTick: .001,
-    get numberOfDecayedSamples(){
-        return this.numberOfSamples - Math.floor(
-            this.numberOfSamples*
-            Math.pow(
-                .5,
-                ((this.currentTime)*this.unitsPerTick)/this.halfLife
-            )
-        );
     },
     getSamples : function(){
         samples = new Array(this.numberOfSamples).fill(0)
@@ -57,15 +66,30 @@ simulation = {
     changeTime: function(ticks){
         this.startTime = (new Date()).getTime() - ticks;
     },
-    reset : function(){
-        this.startTime = (new Date()).getTime;
+    reset : function(isotopeName){
+        //reset time and pause
         this.pause(true);
-        this.halfLife = document.getElementById("halfLife").value;
-        this.units = document.getElementById("units").value;
-        //Make sure to run this atleast once before the first simulation goes
+        this.currentTime = 0;
+
+        if( //use presets
+            typeof(isotopeName) != undefined &&
+            this.isotopes.some(el=>el.name == isotopeName)
+        ){
+            isotope = this.isotopes.find(el=>el.name == isotopeName);
+            this.halfLife = isotope.half_life;
+            this.units = isotope.half_life_units;
+        }
+        else{ //use settings
+            this.halfLife = document.getElementById("halfLife").value;
+            this.units = document.getElementById("units").value;
+        }
+
+        //shuffle decay
         for(i=0;i<this.numberOfSamples;i++){
             this.order[i] = i;
         }
+
+        //set length of simulation
         document.getElementById("decayProgress").max = 10*simulation.halfLife;
         this.order.sort(function(){return Math.random()-.5;})
     }
@@ -90,7 +114,7 @@ function initMaterialWindow(){
         isotopeDropDown = document.getElementById("isotopes");
         isotopes.forEach(isotope => {
             isotopeDropDown.innerHTML = isotopeDropDown.innerHTML + 
-            "\n <option value=\""+isotope.name + "\">"+isotope.name+"</option>";
+            "\n <button onclick=\"simulation.reset(this.value)\" value=\"" + isotope.name + "\">"+ isotope.name +"</button><br>";
         });
     })
     materialWindow = document.getElementById("materialWindow");
@@ -100,7 +124,7 @@ function initMaterialWindow(){
     context.fillStyle = "#FF0000";
     //infinite loop start
     simulation.reset()
-    startSimulation()
+    startAnimation()
 }
 
 function drawFrame(){
@@ -124,9 +148,8 @@ function updateElements(){
     document.getElementById("progress").innerHTML = simulation.numberOfDecayedSamples + "/" + simulation.numberOfSamples;
 }
 
-function startSimulation(){
+function startAnimation(){
     setInterval(function(){
-        simulation.currentTime += 1/30;
         drawFrame()
         updateElements()
     },1000/30)
