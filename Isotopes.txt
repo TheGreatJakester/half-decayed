@@ -1,7 +1,9 @@
 [
 	{
-		"name":"Lutetium-176", 
-		"product":"Hafnium-176", 
+		"name":"Lutetium-176",
+		"color":"#FFFFFF",
+		"product":"Hafnium-176",
+		"product_color":"#000000", 
 		"half-life":37.8, 
 		"half-life units": "billion years",
 		"dating range": "early Earth"

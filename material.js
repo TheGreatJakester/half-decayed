@@ -1,6 +1,7 @@
 let LENGTH = 25;
 
 simulation = {
+    isotopes : [],
     startTime : (new Date()).getTime(),
     get currentTime(){
         if(!this.paused){
@@ -32,13 +33,13 @@ simulation = {
     order: new Array(this.numberOfSamples),
     units: 'years',
     halfLife : 100,
-    unitsPerSecond: .001,
+    unitsPerTick: .001,
     get numberOfDecayedSamples(){
         return this.numberOfSamples - Math.floor(
             this.numberOfSamples*
             Math.pow(
                 .5,
-                ((this.currentTime)*this.unitsPerSecond)/this.halfLife
+                ((this.currentTime)*this.unitsPerTick)/this.halfLife
             )
         );
     },
@@ -49,12 +50,16 @@ simulation = {
         }
         return samples;
     },
-    changeSpeed : function(unitsPerSecond){
-        this.currentTime = this.currentTime*this.unitsPerSecond/unitsPerSecond;
-        this.unitsPerSecond = unitsPerSecond;
+    changeSpeed : function(unitsPerTick){
+        this.currentTime = this.currentTime*this.unitsPerTick/unitsPerTick;
+        this.unitsPerTick = unitsPerTick;
+    },
+    changeTime: function(ticks){
+        this.startTime = (new Date()).getTime() - ticks;
     },
     reset : function(){
-        this.currentTime = 0;
+        this.startTime = (new Date()).getTime;
+        this.pause(true);
         this.halfLife = document.getElementById("halfLife").value;
         this.units = document.getElementById("units").value;
         //Make sure to run this atleast once before the first simulation goes
@@ -81,11 +86,12 @@ function loadJSON(fileName,callback) {
 
 function initMaterialWindow(){
     loadJSON("./Isotopes.txt",function(isotopes){
+        simulation.isotopes = isotopes;
         isotopeDropDown = document.getElementById("isotopes");
         isotopes.forEach(isotope => {
             isotopeDropDown.innerHTML = isotopeDropDown.innerHTML + 
-            "\n <option value=\""+isotope.name + "\">"+isotope.name+"</option>"
-        })
+            "\n <option value=\""+isotope.name + "\">"+isotope.name+"</option>";
+        });
     })
     materialWindow = document.getElementById("materialWindow");
     width = materialWindow.width;
@@ -113,8 +119,8 @@ function drawFrame(){
 }
 
 function updateElements(){
-    document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerSecond;
-    document.getElementById("time").innerHTML = Math.floor(simulation.currentTime*simulation.unitsPerSecond) + " " + simulation.units;
+    document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerTick;
+    document.getElementById("time").innerHTML = Math.floor(simulation.currentTime*simulation.unitsPerTick) + " " + simulation.units;
     document.getElementById("progress").innerHTML = simulation.numberOfDecayedSamples + "/" + simulation.numberOfSamples;
 }
 
