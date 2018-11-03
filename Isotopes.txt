@@ -1,51 +1,61 @@
 [
 	{
 		"name":"Lutetium-176",
-		"color":"#FFFFFF",
+		"color":"#a4c2f2",
 		"product":"Hafnium-176",
-		"product_color":"#000000", 
+		"product_color":"#072960", 
 		"half_life":37.8, 
 		"half_life_units": "billion years",
-		"dating range": "early Earth"
+		"dating_range": "early Earth"
 	},
 	
 	{
 		"name":"Uranium-238", 
+		"color":"#eda0ef",
 		"product":"Lead-206", 
+		"product_color":"#450547",
 		"half_life":4.468, 
 		"half_life_units": "billion years",
-		"dating range": "10 million to origin of Earth"
+		"dating_range": "10 million to origin of Earth"
 	},
 	
 	{
-		"name":"Uranium-235", 
+		"name":"Uranium-235",
+		"color":"#e59e9e",
 		"product":"Lead-207", 
+		"product_color":"#750707",
 		"half_life":704, 
 		"half_life_units": "million years",
-		"dating range": "10 million to origin of Earth"
+		"dating_range": "10 million to origin of Earth"
 	},
 	
 	{
 		"name":"Rubidiom-87", 
-		"product":"Strontiu,-87", 
+		"color":"#f2d4a7",
+		"product":"Strontium-87",
+		"product_color":"#7c4d06",
 		"half_life":48.8, 
 		"half_life_units": "billion years",
-		"dating range": "10 million to origin of Earth"
+		"dating_range": "10 million to origin of Earth"
 	},
 	
 	{
 		"name":"Potassium-40", 
-		"product":"Argon-40", 
+		"color":"#dae595",
+		"product":"Argon-40",
+		"product_color":"#687705",
 		"half_life":1.277, 
 		"half_life_units": "billion years",
-		"dating range": "100,000 to origin of Earth"
+		"dating_range": "100,000 to origin of Earth"
 	},
 	
 	{
 		"name":"Carbon-14", 
+		"color":"#99efec",
 		"product":"Nitrogen-14", 
+		"product_color":"#067c78",
 		"half_life":5730, 
 		"half_life_units": "years",
-		"dating range": "0-100,000"
+		"dating_range": "0-100,000"
 	}
 ]
