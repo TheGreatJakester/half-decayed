@@ -144,6 +144,25 @@ simulation = {
     changeTime: function(ticks){
         this.startTime = (new Date()).getTime() - ticks;
     },
+    makeRandom : function(){
+        this.reset()
+        this.isotope = {
+            "name":"Reactant", 
+            "color":"#EEDDDD",
+            "product":"Product",
+            "productColor":"#222222",
+            "halfLife": Math.random()*95 + 5, 
+            "halfLifeUnits": "years",
+            "datingRange": "Some time in our universe"
+        }
+        this.setSpeedRange()
+        this.changeSpeed(this.isotope.halfLife/8000);
+    },
+    setSpeedRange : function(){
+        document.getElementById("speed").min=this.isotope.halfLife/12000;
+        document.getElementById("speed").max=this.isotope.halfLife/1000;
+        document.getElementById("speed").value=this.isotope.halfLife/8000;
+    },
     reset : function(isotopeName){
         //reset time and pause
         this.pause(true);
@@ -169,9 +188,7 @@ simulation = {
         //set length of simulation
         document.getElementById("decayProgress").max = this.maxTime*this.unitsPerTick;
         //set avalible speeds
-        document.getElementById("speed").min=this.isotope.halfLife/12000;
-        document.getElementById("speed").max=this.isotope.halfLife/1000;
-        document.getElementById("speed").value=this.isotope.halfLife/8000;
+        this.setSpeedRange()
         this.changeSpeed(this.isotope.halfLife/8000);
         //TODO, make a better random solution
         this.order.sort(function(){return Math.random()-.5;})
