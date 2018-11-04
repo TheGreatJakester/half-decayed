@@ -12,14 +12,18 @@
     </head>
     <body onload="initMaterialWindow()">
         <div id="mainWindow">
+                <h1 style="color:white;">
+                    Half-Decayed
+                </h1>
             <canvas id="materialWindow" width="800" height="600"></canvas>
             <div id="mainConsole">
                 <!-- other UI elements should and could go here.-->
                 <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" step=".05"
-                onchange="simulation.changeTime(this.value/simulation.unitsPerTick)">
+                onchange="simulation.currentTime = this.value/simulation.unitsPerTick">
                 <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".0000001" 
                 onchange="simulation.changeSpeed(this.value)"><br>
-                <button onclick="simulation.pause()">PAUSE DECAY</button>
+                <button onclick="simulation.currentTime=0; simulation.pause(true)">RESET</button>
+                <button onclick="simulation.pause()">START/STOP DECAY</button>
                 <br>
                 <p id="time">
                     0
@@ -29,10 +33,10 @@
                 </p>
                 <input type="number" id="halfLife" value="10">
                 <label for="halfLife">Half Life</label><br>
-                <input type="text" id="units" value="years">
-                <label for="units">Units</label><br>
+                <select id="units">
 
-                <button id="startSimulation" onclick="simulation.reset()">START</button>
+                </select>
+                <label for="units">Units</label><br>
                 <div id="isotopes">
 
                 </div>

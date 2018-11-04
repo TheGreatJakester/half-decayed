@@ -1,5 +1,25 @@
 [
 	{
+		"name":"Carbon-14", 
+		"color":"#99efec",
+		"product":"Nitrogen-14", 
+		"product_color":"#067c78",
+		"half_life":5730, 
+		"half_life_units": "years",
+		"dating_range": "0-100,000"
+	},
+
+	{
+		"name":"Uranium-235",
+		"color":"#e59e9e",
+		"product":"Lead-207", 
+		"product_color":"#750707",
+		"half_life":704, 
+		"half_life_units": "million years",
+		"dating_range": "10 million to origin of Earth"
+	},
+
+	{
 		"name":"Lutetium-176",
 		"color":"#a4c2f2",
 		"product":"Hafnium-176",
@@ -16,16 +36,6 @@
 		"product_color":"#450547",
 		"half_life":4.468, 
 		"half_life_units": "billion years",
-		"dating_range": "10 million to origin of Earth"
-	},
-	
-	{
-		"name":"Uranium-235",
-		"color":"#e59e9e",
-		"product":"Lead-207", 
-		"product_color":"#750707",
-		"half_life":704, 
-		"half_life_units": "million years",
 		"dating_range": "10 million to origin of Earth"
 	},
 	
@@ -47,15 +57,5 @@
 		"half_life":1.277, 
 		"half_life_units": "billion years",
 		"dating_range": "100,000 to origin of Earth"
-	},
-	
-	{
-		"name":"Carbon-14", 
-		"color":"#99efec",
-		"product":"Nitrogen-14", 
-		"product_color":"#067c78",
-		"half_life":5730, 
-		"half_life_units": "years",
-		"dating_range": "0-100,000"
 	}
 ]
