@@ -1,5 +1,68 @@
 let LENGTH = 100;
 
+isotopes = 
+[
+	{
+		"name":"Carbon-14", 
+		"color":"#99efec",
+		"product":"Nitrogen-14", 
+		"productColor":"#067c78",
+		"halfLife":5730, 
+		"halfLifeUnits": "years",
+		"datingRange": "0-100,000"
+	},
+
+	{
+		"name":"Uranium-235",
+		"color":"#e59e9e",
+		"product":"Lead-207", 
+		"productColor":"#750707",
+		"halfLife":704, 
+		"halfLifeUnits": "million years",
+		"datingRange": "10 million to origin of Earth"
+	},
+
+	{
+		"name":"Lutetium-176",
+		"color":"#a4c2f2",
+		"product":"Hafnium-176",
+		"productColor":"#072960", 
+		"halfLife":37.8, 
+		"halfLifeUnits": "billion years",
+		"datingRange": "early Earth"
+	},
+	
+	{
+		"name":"Uranium-238", 
+		"color":"#eda0ef",
+		"product":"Lead-206", 
+		"productColor":"#450547",
+		"halfLife":4.468, 
+		"halfLifeUnits": "billion years",
+		"datingRange": "10 million to origin of Earth"
+	},
+	
+	{
+		"name":"Rubidiom-87", 
+		"color":"#f2d4a7",
+		"product":"Strontium-87",
+		"productColor":"#7c4d06",
+		"halfLife":48.8, 
+		"halfLifeUnits": "billion years",
+		"datingRange": "10 million to origin of Earth"
+	},
+	
+	{
+		"name":"Potassium-40", 
+		"color":"#dae595",
+		"product":"Argon-40",
+		"productColor":"#687705",
+		"halfLife":1.277, 
+		"halfLifeUnits": "billion years",
+		"datingRange": "100,000 to origin of Earth"
+	}
+]
+
 simulation = {
     isotopes : [],
     isotope : {
@@ -88,9 +151,9 @@ simulation = {
 
         if( //use presets
             typeof(isotopeName) != undefined &&
-            this.isotopes.some(el=>el.name == isotopeName)
+            isotopes.some(el=>el.name == isotopeName)
         ){
-            this.isotope = this.isotopes.find(el=>el.name == isotopeName);
+            this.isotope = isotopes.find(el=>el.name == isotopeName);
         }
         else{ //use settings
             this.isotope.halfLife = document.getElementById("halfLife").value;
@@ -116,39 +179,20 @@ simulation = {
     }
 }
 
-//deprecated?
-function loadJSON(fileName,callback) {   
-
-    var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-    xobj.open('GET', fileName , true);
-    xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
-            callback(JSON.parse(xobj.responseText));
-          }
-    };
-    xobj.send(null);
-}
-
 function initMaterialWindow(){
-    loadJSON("./Isotopes.txt",function(isotopes){
-        simulation.isotopes = isotopes;
-        isotopeDropDown = document.getElementById("isotopes");
-        unitDropDown = document.getElementById("units");
-        isotopes.forEach(isotope => {
-            isotopeDropDown.innerHTML = isotopeDropDown.innerHTML + 
-            "\n <button onclick=\"simulation.reset(this.value)\" value=\"" + isotope.name + "\">"+ isotope.name +"</button><br>";
-        });
+    isotopeDropDown = document.getElementById("isotopes");
+    unitDropDown = document.getElementById("units");
+    isotopes.forEach(isotope => {
+        isotopeDropDown.innerHTML = isotopeDropDown.innerHTML + 
+        "\n <button onclick=\"simulation.reset(this.value)\" value=\"" + isotope.name + "\">"+ isotope.name +"</button><br>";
+    });
 
-        units = ["seconds","hours","days"];
-        units.concat(
-            isotopes.map(el => el.half_life_units).filter((el,index,array)=> array.indexOf(el) == index)
-        ).forEach(el => {
-            unitDropDown.innerHTML = unitDropDown.innerHTML + 
-            "\n <option value=\"" + el + "\">"+ el +"</option>";
-        })
-
-        
+    units = ["seconds","hours","days"];
+    units.concat(
+        isotopes.map(el => el.halfLifeUnits).filter((el,index,array)=> array.indexOf(el) == index)
+    ).forEach(el => {
+        unitDropDown.innerHTML = unitDropDown.innerHTML + 
+        "\n <option value=\"" + el + "\">"+ el +"</option>";
     })
     materialWindow = document.getElementById("materialWindow");
     width = materialWindow.width;
