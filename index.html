@@ -20,7 +20,7 @@
                 <!-- other UI elements should and could go here.-->
                 <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" step=".05"
                 onchange="simulation.currentTime = this.value/simulation.unitsPerTick">
-                <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".0000001" 
+                <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".001" 
                 onchange="simulation.changeSpeed(this.value)"><br>
                 <button onclick="simulation.currentTime=0; simulation.pause(true)">RESET</button>
                 <button onclick="simulation.pause()">START/STOP DECAY</button>

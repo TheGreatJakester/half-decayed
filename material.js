@@ -105,6 +105,11 @@ simulation = {
 
         //set length of simulation
         document.getElementById("decayProgress").max = this.maxTime*this.unitsPerTick;
+        //set avalible speeds
+        document.getElementById("speed").min=this.halfLife/12000;
+        document.getElementById("speed").max=this.halfLife/1000;
+        document.getElementById("speed").value=this.halfLife/8000;
+        this.changeSpeed(this.halfLife/8000);
         this.order.sort(function(){return Math.random()-.5;})
         this.order.sort(function(){return Math.random()-.5;})
     }
@@ -170,11 +175,11 @@ function drawFrame(){
 
 function updateElements(){
     document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerTick;
-    document.getElementById("time").innerHTML = Math.floor(simulation.currentTime*simulation.unitsPerTick) + " " + simulation.units;
+    document.getElementById("time").innerHTML = (simulation.currentTime*simulation.unitsPerTick).toFixed(3) + " " + simulation.units;
     document.getElementById("progress").innerHTML = 
         (simulation.numberOfSamples - simulation.numberOfDecayedSamples) 
-        + " " + simulation.isotope.name + "<br>" +
-        simulation.numberOfDecayedSamples + " " + simulation.isotope.product;
+        + " " + simulation.isotope.name + "<div style=\"width:20px;height:20px;background:" + simulation.isotope.color + ";\"></div>" +
+        simulation.numberOfDecayedSamples + " " + simulation.isotope.product + "<div style=\"width:20px;height:20px;background:" + simulation.isotope.product_color + ";\"></div>";
 }
 
 function startAnimation(){
