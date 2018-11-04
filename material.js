@@ -2,17 +2,21 @@ let LENGTH = 100;
 
 simulation = {
     isotopes : [],
-    isotope : {},
+    isotope : {
+        name:"Carbon-14", 
+		color:"#99efec",
+		product:"Nitrogen-14", 
+		productColor:"#067c78",
+		halfLife:5730, 
+		halfLifeUnits: "years",
+		datingRange: "0-100,000"
+    },
     startTime : (new Date()).getTime(),
     paused: true,
     pausedTime: 0,
     numberOfSamples : LENGTH*LENGTH,
     order: new Array(this.numberOfSamples),
-    units: 'years',
-    halfLife : 100,
     unitsPerTick: .001,
-    sampleColor:"#0ea1b5",
-    decayColor:"#000000",
     get currentTime(){
         if(!this.paused){
             time = ((new Date()).getTime() - this.startTime);
@@ -41,12 +45,12 @@ simulation = {
     get numberOfDecayedSamples(){
         ans =  this.numberOfSamples - Math.ceil(
             this.numberOfSamples*
-            Math.pow(.5,(this.currentTime*this.unitsPerTick)/this.halfLife)
+            Math.pow(.5,(this.currentTime*this.unitsPerTick)/this.isotope.halfLife)
         );
         return ans;
     },
     get maxTime(){
-        return (this.halfLife * -2 * Math.log(LENGTH))/(Math.log(.5)*this.unitsPerTick);
+        return (this.isotope.halfLife * -2 * Math.log(LENGTH))/(Math.log(.5)*this.unitsPerTick);
     },
     pause : function(state){
         if(state != undefined){
@@ -87,15 +91,11 @@ simulation = {
             this.isotopes.some(el=>el.name == isotopeName)
         ){
             this.isotope = this.isotopes.find(el=>el.name == isotopeName);
-
-            this.sampleColor = this.isotope.color;
-            this.decayColor = this.isotope.product_color;
-            this.halfLife = this.isotope.half_life;
-            this.units = this.isotope.half_life_units;
         }
         else{ //use settings
-            this.halfLife = document.getElementById("halfLife").value;
-            this.units = document.getElementById("units").value;
+            this.isotope.halfLife = document.getElementById("halfLife").value;
+            this.isotope.units = document.getElementById("units").value;
+            //TODO make the rest defualt
         }
 
         //shuffle decay
@@ -106,15 +106,17 @@ simulation = {
         //set length of simulation
         document.getElementById("decayProgress").max = this.maxTime*this.unitsPerTick;
         //set avalible speeds
-        document.getElementById("speed").min=this.halfLife/12000;
-        document.getElementById("speed").max=this.halfLife/1000;
-        document.getElementById("speed").value=this.halfLife/8000;
-        this.changeSpeed(this.halfLife/8000);
+        document.getElementById("speed").min=this.isotope.halfLife/12000;
+        document.getElementById("speed").max=this.isotope.halfLife/1000;
+        document.getElementById("speed").value=this.isotope.halfLife/8000;
+        this.changeSpeed(this.isotope.halfLife/8000);
+        //TODO, make a better random solution
         this.order.sort(function(){return Math.random()-.5;})
         this.order.sort(function(){return Math.random()-.5;})
     }
 }
 
+//deprecated?
 function loadJSON(fileName,callback) {   
 
     var xobj = new XMLHttpRequest();
@@ -126,7 +128,7 @@ function loadJSON(fileName,callback) {
           }
     };
     xobj.send(null);
- }
+}
 
 function initMaterialWindow(){
     loadJSON("./Isotopes.txt",function(isotopes){
@@ -163,10 +165,10 @@ function drawFrame(){
     for(i=0;i<LENGTH;i++){
         for(j=0;j<LENGTH;j++){
             if(samples[i*LENGTH+j] == 1){
-                context.fillStyle = simulation.decayColor;
+                context.fillStyle = simulation.isotope.productColor;
             }
             else{
-                context.fillStyle = simulation.sampleColor;
+                context.fillStyle = simulation.isotope.color;
             }
             context.fillRect(i*(width/LENGTH),j*(height/LENGTH),(width/LENGTH),(height/LENGTH))
         }
@@ -175,11 +177,11 @@ function drawFrame(){
 
 function updateElements(){
     document.getElementById("decayProgress").value = simulation.currentTime*simulation.unitsPerTick;
-    document.getElementById("time").innerHTML = (simulation.currentTime*simulation.unitsPerTick).toFixed(3) + " " + simulation.units;
+    document.getElementById("time").innerHTML = (simulation.currentTime*simulation.unitsPerTick).toFixed(3) + " " + simulation.isotope.halfLifeUnits;
     document.getElementById("progress").innerHTML = 
         (simulation.numberOfSamples - simulation.numberOfDecayedSamples) 
         + " " + simulation.isotope.name + "<div style=\"width:20px;height:20px;background:" + simulation.isotope.color + ";\"></div>" +
-        simulation.numberOfDecayedSamples + " " + simulation.isotope.product + "<div style=\"width:20px;height:20px;background:" + simulation.isotope.product_color + ";\"></div>";
+        simulation.numberOfDecayedSamples + " " + simulation.isotope.product + "<div style=\"width:20px;height:20px;background:" + simulation.isotope.productColor + ";\"></div>";
 }
 
 function startAnimation(){

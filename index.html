@@ -1,11 +1,13 @@
 <!DOCTYPE html>
     <head>
         <title>half-decayed</title>
+        <!--
         <script
             src="https://code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
             crossorigin="anonymous">
         </script>
+        -->
         <script src="material.js"></script>
         <link rel="stylesheet" type="text/css" href="index.css">
         <meta charset="UTF-8">
@@ -20,7 +22,7 @@
                 <!-- other UI elements should and could go here.-->
                 <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" step=".05"
                 onchange="simulation.currentTime = this.value/simulation.unitsPerTick">
-                <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".001" 
+                <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".00001" 
                 onchange="simulation.changeSpeed(this.value)"><br>
                 <button onclick="simulation.currentTime=0; simulation.pause(true)">RESET</button>
                 <button onclick="simulation.pause()">START/STOP DECAY</button>
