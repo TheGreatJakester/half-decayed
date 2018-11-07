@@ -43,7 +43,7 @@ isotopes =
 	},
 	
 	{
-		"name":"Rubidiom-87", 
+		"name":"Rubidium-87", 
 		"color":"#f2d4a7",
 		"product":"Strontium-87",
 		"productColor":"#7c4d06",
