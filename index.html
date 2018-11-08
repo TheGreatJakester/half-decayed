@@ -18,13 +18,14 @@
                     Half-Life Activity
                 </h1>
             <canvas id="materialWindow" width="800" height="600"></canvas>
-            <div id="mainConsole">
-                <!-- other UI elements should and could go here.-->
-                <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" step=".05"
-                onchange="simulation.currentTime = this.value/simulation.unitsPerTick">
-                <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".00001" 
-                onchange="simulation.changeSpeed(this.value)"><br>
-                
+        </div>
+        <div id="mainConsole">
+            <!-- other UI elements should and could go here.-->
+            <input type="range" min="0" max="500" value="0" class="slider" id="decayProgress" step=".05"
+            onchange="simulation.currentTime = this.value/simulation.unitsPerTick">
+            <input type="range" min=".0000001" max=".01" value=".001" class="slider" id="speed" step=".00001" 
+            onchange="simulation.changeSpeed(this.value)"><br>
+            <div id="mainButtons">
                 <p id="time">
                     0
                 </p>
@@ -37,21 +38,19 @@
                 <select id="units">
 
                 </select>
-                <button onclick="simulation.currentTime=0; simulation.pause(true)">Set</button>
+                <button onclick="simulation.setIsotope()">Set</button>
                 <br><br>
                 
                 <button onclick="simulation.currentTime=0; simulation.pause(true)">Reset</button>
                 <button onclick="simulation.pause()">Start/Stop</button>
                 <button onclick="simulation.makeRandom()">Random</button>
-                <br>
-
-                <br>
-               
-                <div id="isotopes">
-                <label for="isotopes">Isotopes</label><br>
-                    
-                </div>
             </div>
+            <div id="sideButtons">
+                <div id="isotopes">
+                </div>
+                <label for="isotopes">Isotopes</label>
+            </div>
+
         </div>
     </body>
 </html>

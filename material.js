@@ -144,6 +144,20 @@ simulation = {
     changeTime: function(ticks){
         this.startTime = (new Date()).getTime() - ticks;
     },
+    setIsotope : function(){
+        this.random
+        this.isotope = {
+            "name":"Reactant", 
+            "color":"#4ddbff",
+            "product":"Product",
+            "productColor":"#002933",
+            "halfLife": document.getElementById("halfLife").value, 
+            "halfLifeUnits": document.getElementById("units").value,
+            "datingRange": "Some time in our universe"
+        }
+        this.setSpeedRange()
+        this.changeSpeed(this.isotope.halfLife/8000)    
+    },
     makeRandom : function(){
         this.reset()
         this.isotope = {

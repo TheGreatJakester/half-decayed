@@ -5,9 +5,17 @@ body{
     width:800px;
     margin-left:auto;
     margin-right:auto;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
+#sideButtons{
+    width: 30%;
+    float:left; /* add this */
+}
+#mainButtons{
+    width: 60%;
+    float:left; /* add this */
+}
 #mainConsole{
     padding:5% 10%;
     color:white;
@@ -15,6 +23,7 @@ body{
     margin-left:auto;
     margin-right:auto;
     background:#404040;
+    overflow: hidden;
 }
 
 button{
