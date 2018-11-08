@@ -218,7 +218,7 @@ function initMaterialWindow(){
         "\n <button onclick=\"simulation.reset(this.value)\" value=\"" + isotope.name + "\">"+ isotope.name +"</button><br>";
     });
 
-    units = ["seconds","hours","days"];
+    units = ["seconds","minutes","hours","days"];
     units.concat(
         isotopes.map(el => el.halfLifeUnits).filter((el,index,array)=> array.indexOf(el) == index)
     ).forEach(el => {
