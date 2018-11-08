@@ -165,7 +165,7 @@ simulation = {
             "color":"#EEDDDD",
             "product":"Product",
             "productColor":"#222222",
-            "halfLife": Math.random()*95 + 5, 
+            "halfLife": Math.random()*49 + 1, 
             "halfLifeUnits": "years",
             "datingRange": "Some time in our universe"
         }
