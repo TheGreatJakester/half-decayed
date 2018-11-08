@@ -1,4 +1,4 @@
-let LENGTH = 100;
+let LENGTH = 40;
 
 isotopes = 
 [
