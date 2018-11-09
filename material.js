@@ -145,7 +145,7 @@ simulation = {
         this.startTime = (new Date()).getTime() - ticks;
     },
     setIsotope : function(){
-        this.random
+        this.reset();
         this.isotope = {
             "name":"Reactant", 
             "color":"#4ddbff",
